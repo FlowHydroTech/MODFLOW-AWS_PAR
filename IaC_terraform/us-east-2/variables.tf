@@ -48,6 +48,41 @@ variable "ecr_image_pelambres_evu_cierre" {
 }
 
 
+variable "ecr_image_mpupio" {
+  description = "Imagen del contenedor"
+  type        = string
+  default     = "312019940349.dkr.ecr.us-east-2.amazonaws.com/agente-mpupio:latest"
+}
+
+variable "ecr_image_mpupio_cb" {
+  description = "Imagen del contenedor"
+  type        = string
+  default     = "312019940349.dkr.ecr.us-east-2.amazonaws.com/agente-mpupio-cb:latest"
+}
+
+variable "ecr_image_mpupio_evu" {
+  description = "Imagen del contenedor"
+  type        = string
+  default     = "312019940349.dkr.ecr.us-east-2.amazonaws.com/agente-mpupio-evu:latest"
+}
+
+variable "ecr_image_choapa" {
+  description = "Imagen del contenedor"
+  type        = string
+  default     = "312019940349.dkr.ecr.us-east-2.amazonaws.com/agente-choapa:latest"
+}
+
+variable "ecr_image_choapa_cb" {
+  description = "Imagen del contenedor"
+  type        = string
+  default     = "312019940349.dkr.ecr.us-east-2.amazonaws.com/agente-choapa-cb:latest"
+}
+
+variable "ecr_image_choapa_evu" {
+  description = "Imagen del contenedor"
+  type        = string
+  default     = "312019940349.dkr.ecr.us-east-2.amazonaws.com/agente-choapa-evu:latest"
+}
 
 variable "common_tags_icsara" {
   type = map(string)

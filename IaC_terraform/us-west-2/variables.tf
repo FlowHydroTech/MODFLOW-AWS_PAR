@@ -44,6 +44,38 @@ variable "ecr_image_choapa_evu" {
   default     = "312019940349.dkr.ecr.us-west-2.amazonaws.com/agente-choapa-evu:latest"
 }
 
+variable "ecr_image_pelambres" {
+  description = "Imagen del contenedor"
+  type        = string
+  default     = "312019940349.dkr.ecr.us-weast-2.amazonaws.com/agente-pelambres:latest"
+}
+
+variable "ecr_image_pelambres_cb_op" {
+  description = "Imagen del contenedor"
+  type        = string
+  default     = "312019940349.dkr.ecr.us-weast-2.amazonaws.com/agente-pelambres-cb-op:latest"
+}
+
+variable "ecr_image_pelambres_evu_op" {
+  description = "Imagen del contenedor"
+  type        = string
+  default     = "312019940349.dkr.ecr.us-weast-2.amazonaws.com/agente-pelambres-evu-op:latest"
+}
+
+variable "ecr_image_pelambres_cb_cierre" {
+  description = "Imagen del contenedor"
+  type        = string
+  default     = "312019940349.dkr.ecr.us-weast-2.amazonaws.com/agente-pelambres-cb-cierre:latest"
+}
+
+
+variable "ecr_image_pelambres_evu_cierre" {
+  description = "Imagen del contenedor"
+  type        = string
+  default     = "312019940349.dkr.ecr.us-weast-2.amazonaws.com/agente-pelambres-evu-cierre:latest"
+}
+
+
 variable "common_tags_icsara" {
   type = map(string)
   default = {

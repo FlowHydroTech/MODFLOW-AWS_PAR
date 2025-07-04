@@ -270,3 +270,186 @@ resource "aws_ecs_task_definition" "task_agente_choapa_evu" {
     }
   }])
 }
+
+#Infreaestructura para pelambres
+resource "aws_cloudwatch_log_group" "ecs_logs_pelambres" {
+  name              = "/ecs/agente_pelambres"
+  retention_in_days = 30
+  tags              = var.common_tags_icsara
+}
+
+resource "aws_cloudwatch_log_group" "ecs_logs_pelambres_cb_op" {
+  name              = "/ecs/agente_pelambres_cb_op"
+  retention_in_days = 30
+  tags              = var.common_tags_icsara
+}
+
+resource "aws_cloudwatch_log_group" "ecs_logs_pelambres_evu_op" {
+  name              = "/ecs/agente_pelambres_evu_op"
+  retention_in_days = 30
+  tags              = var.common_tags_icsara
+}
+
+
+resource "aws_cloudwatch_log_group" "ecs_logs_pelambres_cb_cierre" {
+  name              = "/ecs/agente_pelambres_cb_cierre"
+  retention_in_days = 30
+  tags              = var.common_tags_icsara
+}
+
+resource "aws_cloudwatch_log_group" "ecs_logs_pelambres_evu_cierre" {
+  name              = "/ecs/agente_pelambres_evu_cierre"
+  retention_in_days = 30
+  tags              = var.common_tags_icsara
+}
+
+resource "aws_ecs_cluster" "cluster_agente_pelambres" {
+  name = "cluster-agente-pelambres"
+  tags = var.common_tags_icsara
+}
+
+resource "aws_ecs_task_definition" "task_agente_pelambres" {
+  family                   = "task-agente-pelambres"
+  requires_compatibilities = ["FARGATE"]
+  network_mode             = "awsvpc"
+  cpu                      = "1024"
+  memory                   = "2048"
+  execution_role_arn       = aws_iam_role.ecs_task_execution.arn
+  task_role_arn            = data.aws_iam_role.task_role.arn
+  tags                     = var.common_tags_icsara
+
+  container_definitions = jsonencode([{
+    name      = "agente-pelambres"
+    image     = var.ecr_image_pelambres
+    essential = true
+    command   = ["/bin/bash", "/app/entrypoint.sh"]
+    environment = [
+        { name = "ID_PARAMETRO", value = var.ID_PARAMETRO }, # Valor por defecto
+        ]
+    logConfiguration = {
+      logDriver = "awslogs"
+      options = {
+        awslogs-group         = aws_cloudwatch_log_group.ecs_logs_pelambres.name
+        awslogs-region        = var.aws_region
+        awslogs-stream-prefix = "ecs"
+      }
+    }
+  }])
+}
+
+resource "aws_ecs_task_definition" "pelambres_cb_op" {
+  family                   = "task-agente-pelambres-cb-op"
+  requires_compatibilities = ["FARGATE"]
+  network_mode             = "awsvpc"
+  cpu                      = "1024"
+  memory                   = "2048"
+  execution_role_arn       = aws_iam_role.ecs_task_execution.arn
+  task_role_arn            = data.aws_iam_role.task_role.arn
+  tags                     = var.common_tags_icsara
+
+  container_definitions = jsonencode([{
+    name      = "agente-pelambres-cb-op"
+    image     = var.ecr_image_pelambres_cb_op
+    essential = true
+    command   = ["/bin/bash", "/app/entrypoint.sh"]
+    environment = [
+        { name = "ID_PARAMETRO", value = var.ID_PARAMETRO }
+        ]
+    logConfiguration = {
+      logDriver = "awslogs"
+      options = {
+        awslogs-group         = aws_cloudwatch_log_group.ecs_logs_pelambres_cb_op.name
+        awslogs-region        = var.aws_region
+        awslogs-stream-prefix = "ecs"
+      }
+    }
+  }])
+}
+
+resource "aws_ecs_task_definition" "pelambres_evu_op" {
+  family                   = "task-agente-pelambres-evu-op"
+  requires_compatibilities = ["FARGATE"]
+  network_mode             = "awsvpc"
+  cpu                      = "1024"
+  memory                   = "2048"
+  execution_role_arn       = aws_iam_role.ecs_task_execution.arn
+  task_role_arn            = data.aws_iam_role.task_role.arn
+  tags                     = var.common_tags_icsara
+
+  container_definitions = jsonencode([{
+    name      = "agente-pelambres-evu-op"
+    image     = var.ecr_image_pelambres_evu_op
+    essential = true
+    command   = ["/bin/bash", "/app/entrypoint.sh"]
+    environment = [
+        { name = "ID_PARAMETRO", value = var.ID_PARAMETRO }
+        ]
+    logConfiguration = {
+      logDriver = "awslogs"
+      options = {
+        awslogs-group         = aws_cloudwatch_log_group.ecs_logs_pelambres_evu_op.name
+        awslogs-region        = var.aws_region
+        awslogs-stream-prefix = "ecs"
+      }
+    }
+  }])
+}
+
+resource "aws_ecs_task_definition" "pelambres_cb_cierre" {
+  family                   = "task-agente-pelambres-cb-cierre"
+  requires_compatibilities = ["FARGATE"]
+  network_mode             = "awsvpc"
+  cpu                      = "1024"
+  memory                   = "2048"
+  execution_role_arn       = aws_iam_role.ecs_task_execution.arn
+  task_role_arn            = data.aws_iam_role.task_role.arn
+  tags                     = var.common_tags_icsara
+
+  container_definitions = jsonencode([{
+    name      = "agente-pelambres-cb-cierre"
+    image     = var.ecr_image_pelambres_cb_cierre
+    essential = true
+    command   = ["/bin/bash", "/app/entrypoint.sh"]
+    environment = [
+        { name = "ID_PARAMETRO", value = var.ID_PARAMETRO }
+        ]
+    logConfiguration = {
+      logDriver = "awslogs"
+      options = {
+        awslogs-group         = aws_cloudwatch_log_group.ecs_logs_pelambres_cb_cierre.name
+        awslogs-region        = var.aws_region
+        awslogs-stream-prefix = "ecs"
+      }
+    }
+  }])
+}
+
+
+resource "aws_ecs_task_definition" "pelambres_evu_cierre" {
+  family                   = "task-agente-pelambres-evu-cierre"
+  requires_compatibilities = ["FARGATE"]
+  network_mode             = "awsvpc"
+  cpu                      = "1024"
+  memory                   = "2048"
+  execution_role_arn       = aws_iam_role.ecs_task_execution.arn
+  task_role_arn            = data.aws_iam_role.task_role.arn
+  tags                     = var.common_tags_icsara
+
+  container_definitions = jsonencode([{
+    name      = "agente-pelambres-evu-cierre"
+    image     = var.ecr_image_pelambres_evu_cierre
+    essential = true
+    command   = ["/bin/bash", "/app/entrypoint.sh"]
+    environment = [
+        { name = "ID_PARAMETRO", value = var.ID_PARAMETRO }
+        ]
+    logConfiguration = {
+      logDriver = "awslogs"
+      options = {
+        awslogs-group         = aws_cloudwatch_log_group.ecs_logs_pelambres_evu_cierre.name
+        awslogs-region        = var.aws_region
+        awslogs-stream-prefix = "ecs"
+      }
+    }
+  }])
+}
