@@ -1,0 +1,15 @@
+#PASO 001 crear imagen del modelo con docker
+docker build -t agente_choapa_test .
+
+paso010: vincular docker a aws ecr:
+aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 312019940349.dkr.ecr.us-east-1.amazonaws.com
+
+paso010: Crear el repositorio en AWS ECR para la imagen:
+aws ecr create-repository --repository-name agente_choapa_test --region us-east-1
+
+paso020: Crear el tag para la imagen
+docker tag agente_choapa_test:latest 312019940349.dkr.ecr.us-east-1.amazonaws.com/agente_choapa_test:latest
+
+paso030: Subir imagen a AWS ECR:
+docker push 312019940349.dkr.ecr.us-east-1.amazonaws.com/agente_choapa_test:latest
+
