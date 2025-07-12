@@ -32,7 +32,7 @@ resource "aws_iam_role" "ecs_task_execution" {
 }
 
 # IAM Role para la tarea (acceso a S3) (ya existe, creado previamente)
-data "aws_iam_role" "task_role" {
+/*data "aws_iam_role" "task_role" {
   name = "ecsTaskS3WriteRole"
 }
 
@@ -44,7 +44,7 @@ resource "aws_iam_role_policy_attachment" "attach_s3_write" {
   role       = data.aws_iam_role.task_role.name
   policy_arn = data.aws_iam_policy.s3_write_policy.arn
 }
-
+*/
 resource "aws_iam_role_policy_attachment" "ecs_execution_policy" {
   role       = aws_iam_role.ecs_task_execution.name
   policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
@@ -66,7 +66,7 @@ resource "aws_ecs_task_definition" "task-agente-mpupio" {
   cpu                      = "1024"
   memory                   = "2048"
   execution_role_arn       = aws_iam_role.ecs_task_execution.arn
-  task_role_arn            = data.aws_iam_role.task_role.arn
+#  task_role_arn            = data.aws_iam_role.task_role.arn
   tags                     = var.common_tags_icsara
 
   container_definitions = jsonencode([{
@@ -95,7 +95,7 @@ resource "aws_ecs_task_definition" "task-agente-mpupio-cb" {
   cpu                      = "1024"
   memory                   = "2048"
   execution_role_arn       = aws_iam_role.ecs_task_execution.arn
-  task_role_arn            = data.aws_iam_role.task_role.arn
+#  task_role_arn            = data.aws_iam_role.task_role.arn
   tags                     = var.common_tags_icsara
 
   ephemeral_storage {
@@ -127,7 +127,7 @@ resource "aws_ecs_task_definition" "task-agente-mpupio-evu" {
   cpu                      = "1024"
   memory                   = "2048"
   execution_role_arn       = aws_iam_role.ecs_task_execution.arn
-  task_role_arn            = data.aws_iam_role.task_role.arn
+#  task_role_arn            = data.aws_iam_role.task_role.arn
   tags                     = var.common_tags_icsara
 
   ephemeral_storage {
@@ -183,7 +183,7 @@ resource "aws_ecs_task_definition" "task_agente_choapa" {
   cpu                      = "1024"
   memory                   = "2048"
   execution_role_arn       = aws_iam_role.ecs_task_execution.arn
-  task_role_arn            = data.aws_iam_role.task_role.arn
+#  task_role_arn            = data.aws_iam_role.task_role.arn
   tags                     = var.common_tags_icsara
 
   container_definitions = jsonencode([{
@@ -212,7 +212,7 @@ resource "aws_ecs_task_definition" "task_agente_choapa_cb" {
   cpu                      = "1024"
   memory                   = "2048"
   execution_role_arn       = aws_iam_role.ecs_task_execution.arn
-  task_role_arn            = data.aws_iam_role.task_role.arn
+#  task_role_arn            = data.aws_iam_role.task_role.arn
   tags                     = var.common_tags_icsara
 
   ephemeral_storage {
@@ -245,7 +245,7 @@ resource "aws_ecs_task_definition" "task_agente_choapa_evu" {
   cpu                      = "1024"
   memory                   = "2048"
   execution_role_arn       = aws_iam_role.ecs_task_execution.arn
-  task_role_arn            = data.aws_iam_role.task_role.arn
+#  task_role_arn            = data.aws_iam_role.task_role.arn
   tags                     = var.common_tags_icsara
 
   ephemeral_storage {
@@ -315,7 +315,7 @@ resource "aws_ecs_task_definition" "task_agente_pelambres" {
   cpu                      = "1024"
   memory                   = "2048"
   execution_role_arn       = aws_iam_role.ecs_task_execution.arn
-  task_role_arn            = data.aws_iam_role.task_role.arn
+#  task_role_arn            = data.aws_iam_role.task_role.arn
   tags                     = var.common_tags_icsara
 
   container_definitions = jsonencode([{
@@ -344,7 +344,7 @@ resource "aws_ecs_task_definition" "pelambres_cb_op" {
   cpu                      = "1024"
   memory                   = "2048"
   execution_role_arn       = aws_iam_role.ecs_task_execution.arn
-  task_role_arn            = data.aws_iam_role.task_role.arn
+#  task_role_arn            = data.aws_iam_role.task_role.arn
   tags                     = var.common_tags_icsara
 
   container_definitions = jsonencode([{
@@ -373,7 +373,7 @@ resource "aws_ecs_task_definition" "pelambres_evu_op" {
   cpu                      = "1024"
   memory                   = "2048"
   execution_role_arn       = aws_iam_role.ecs_task_execution.arn
-  task_role_arn            = data.aws_iam_role.task_role.arn
+#  task_role_arn            = data.aws_iam_role.task_role.arn
   tags                     = var.common_tags_icsara
 
   container_definitions = jsonencode([{
@@ -402,7 +402,7 @@ resource "aws_ecs_task_definition" "pelambres_cb_cierre" {
   cpu                      = "1024"
   memory                   = "2048"
   execution_role_arn       = aws_iam_role.ecs_task_execution.arn
-  task_role_arn            = data.aws_iam_role.task_role.arn
+#  task_role_arn            = data.aws_iam_role.task_role.arn
   tags                     = var.common_tags_icsara
 
   container_definitions = jsonencode([{
@@ -432,7 +432,7 @@ resource "aws_ecs_task_definition" "pelambres_evu_cierre" {
   cpu                      = "1024"
   memory                   = "2048"
   execution_role_arn       = aws_iam_role.ecs_task_execution.arn
-  task_role_arn            = data.aws_iam_role.task_role.arn
+#  task_role_arn            = data.aws_iam_role.task_role.arn
   tags                     = var.common_tags_icsara
 
   container_definitions = jsonencode([{
